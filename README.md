@@ -4,90 +4,36 @@
 > Inverted to name the package: **`json-renderers-from-instructions`**.  
 > Transforms columns and datasets into a pure Virtual JSON DOM specification via declarative JSON instructions, mounted into the browser DOM in a single atomic pass.
 
+<div align="center">
+
 [![npm version](https://img.shields.io/npm/v/json-renderers-from-instructions.svg?color=cb3837&logo=npm)](https://www.npmjs.com/package/json-renderers-from-instructions)
+[![Live Demo Hub](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-success?logo=github&logoColor=white)](https://keshavsoft.github.io/json-renderers-from-instructions/)
+[![Table Suite V1](https://img.shields.io/badge/Table%20Suite-docs%2Ftable-blueviolet?logo=bootstrap&logoColor=white)](https://keshavsoft.github.io/json-renderers-from-instructions/table/v1/index.html)
+[![Monaco 2D Studio](https://img.shields.io/badge/Monaco%20Studio-Live%20Playground-informational?logo=visualstudiocode&logoColor=white)](https://keshavsoft.github.io/json-renderers-from-instructions/monaco/v1/index.html)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Zero DOM Dependencies in Spec Builder](https://img.shields.io/badge/Spec%20Builder-Pure%20JSON-blue.svg)](#the-architecture-5-piece-pipeline)
+
+[**Live Demo Hub**](https://keshavsoft.github.io/json-renderers-from-instructions/) • [**NPM Package**](https://www.npmjs.com/package/json-renderers-from-instructions) • [**Table Renderers (docs/table)**](docs/table/v1/index.html) • [**Monaco 2D Studio**](docs/monaco/v1/index.html) • [**8-Chapter Story**](docs/stories/01-the-sentence.html)
+
+</div>
 
 ---
 
-## 📖 The Story: "JSON Instructions FORM Renderers"
+## 📊 Table Renderers Suite (`docs/table`)
 
-Behind this project is a single, unmistakable architectural truth:
+The interactive table showcase is located in [`docs/table/`](docs/table/v1/index.html). It features five declarative table components generated purely from JSON contracts:
 
-$$\mathbf{JSON\ instructions} \quad\xrightarrow{\quad\mathbf{FORM}\quad}\quad \mathbf{renderers}$$
+| Table Variant | Instruction Type | Live Link | Description |
+| :--- | :--- | :--- | :--- |
+| **Simple Table** | `table.simple` | [Open Sample Demo](docs/table/v1/sample/index.html) | Complete turnkey table: header, colgroup widths, and 2D body data rows. |
+| **With Footer** | `table.withFooter` | [Open With Footer Demo](docs/table/v1/withFooter/index.html) | Extended table featuring full headers, body records, and summary calculations in `tfoot`. |
+| **Header Only** | `table.headerOnly` | [Open Header Only Demo](docs/table/v1/headerOnly/index.html) | Column structure shell with widths, designed for incremental body streaming. |
+| **Body Only** | `table.bodyOnly` | [Open Body Only Demo](docs/table/v1/bodyOnly/index.html) | Pure data row matrix (`tbody`) injected into existing DOM table shells. |
+| **Footer Only** | `table.footerOnly` | [Open Footer Only Demo](docs/table/v1/footerOnly/index.html) | Modular summary footer calculation row mounted to `tfoot`. |
 
-* **Active Voice**: *"JSON instructions **FORM** renderers."* (What the engine does: takes JSON instructions to form UI specifications).
-* **Passive Voice**: *"JSON renderers [built] **FROM** instructions."* (The package name: `json-renderers-from-instructions`).
-
-### 📚 The 8-Chapter Interactive Story Documentation
-Visit the **[Exhibition Hub](docs/index.html)** or dive directly into individual chapters:
-
-1. **[Chapter 1: The Core Sentence](docs/stories/01-the-sentence.html)** — Active vs. Passive: why "JSON instructions FORM renderers" is the whole story.
-2. **[Chapter 2: Why JSON?](docs/stories/02-why-json.html)** — Why JSON as the single source of truth over JSX or templates.
-3. **[Chapter 3: The Instructions](docs/stories/03-the-instructions.html)** — Recipes as data: 1D Single instructions and 2D Double matrix instructions.
-4. **[Chapter 4: The Verb FORM](docs/stories/04-the-verb-form.html)** — How the engine shapes formless data into a Virtual DOM specification tree.
-5. **[Chapter 5: The Renderers](docs/stories/05-the-renderers.html)** — Bringing the specification to life via `@keshavsoft/json-to-dom`.
-6. **[Chapter 6: The Table Benchmark](docs/stories/06-the-table-benchmark.html)** — Why the table came first: the 4-zone stress test proving the architecture.
-7. **[Chapter 7: The Complete Pipeline](docs/stories/07-the-pipeline.html)** — How the 5 micro-libraries collaborate cleanly with single responsibility.
-8. **[Chapter 8: The Monaco Studio](docs/stories/08-the-monaco-studio.html)** — Live in-browser instruction engineering with the Monaco Studio.
+👉 Explore the interactive [Table V1 Navigation Hub](docs/table/v1/index.html).
 
 ---
 
-## 🛠️ The Paradigm Shift: Declarative Instruction-Driven Rendering
-
-`json-renderers-from-instructions` solves this by inverting the entire flow:
-
-> **You supply plain JSON contracts (columns, data, and options). Pure JSON instructions build a Virtual DOM specification tree. A high-performance DOM builder stamps it into the target container.**
-
-```
-   Raw Data + Columns + Options
-                 │
-                 ▼
-┌─────────────────────────────────┐
-│ json-renderers-from-instructions│ ◄── Orchestrates validation, spec generation, & mounting
-└─────────────────────────────────┘
-                 │
-                 ▼ Pure Virtual DOM Specification Tree
-┌─────────────────────────────────┐
-│     JSON DOM Specification      │ ◄── { tagName, attributes, children }
-└─────────────────────────────────┘
-                 │
-                 ▼ Stamped into target container
-┌─────────────────────────────────┐
-│     @keshavsoft/json-to-dom     │ ◄── Creates real HTML elements
-└─────────────────────────────────┘
-                 │
-                 ▼
-       Mounted <table> Element
-```
-
----
-
-## 🏛️ The Architecture: 5-Piece Pipeline
-
-`json-renderers-from-instructions` serves as the high-level turnkey orchestrator uniting five specialized micro-libraries:
-
-```
-  1. Input Contracts             2. Component Blueprints          3. Instruction Engine
- ┌─────────────────┐             ┌─────────────────────┐         ┌─────────────────────────────────┐
- │  columns.json   │             │      spec-repo      │         │ json-renderers-run-instructions │
- │   data.json     │────────────►│  (definitions.json) │────────►│  (executes 1D & 2D declarative  │
- │   options {}    │             │    table.simple     │         │   transformations on registry)  │
- └─────────────────┘             └─────────────────────┘         └─────────────────────────────────┘
-                                                                                  │
-                                                                                  ▼
- ┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
- │                                json-renderers-from-instructions                                 │
- │            • Validates input schema via json-renderers-guard                                    │
- │            • Resolves component definitions from spec-repo                                      │
- │            • Applies options via json-renderers-build-table-options                             │
- │            • Mounts final spec into DOM via @keshavsoft/json-to-dom                             │
- │            • Registers window.ks.jsonRenderers.fromInstructions.render                          │
- └─────────────────────────────────────────────────────────────────────────────────────────────────┘
-                                                  │
-                                                  ▼
-                                       Real DOM Table Mounted
-```
 
 | Component | Role |
 | :--- | :--- |
@@ -116,7 +62,7 @@ pnpm add json-renderers-from-instructions
 Include the pre-bundled standalone distribution:
 
 ```html
-<script type="module" src="https://keshavsoft.github.io/json-renderers-from-instructions/dist/v3/min.js"></script>
+<script type="module" src="https://keshavsoft.github.io/json-renderers-from-instructions/dist/v5/min.js"></script>
 ```
 
 ---
@@ -158,7 +104,7 @@ render({
 
 ### 2. Browser Global (`window.ks`)
 
-When using the CDN or pre-compiled bundle (`dist/v3/min.js`), the library automatically registers on the global namespace:
+When using the CDN or pre-compiled bundle (`dist/v5/min.js`), the library automatically registers on the global namespace:
 
 ```javascript
 window.ks.jsonRenderers.fromInstructions.render({
@@ -171,14 +117,14 @@ window.ks.jsonRenderers.fromInstructions.render({
 });
 ```
 
-### 3. Headless Specification Builder (`buildTableSpec`)
+### 3. Headless Specification Builder (`buildSpec`)
 
 If you only want the JSON specification without touching the DOM (for unit testing, SSR, Web Workers, or inspection):
 
 ```javascript
-import { buildTableSpec } from "json-renderers-from-instructions";
+import { buildSpec } from "json-renderers-from-instructions";
 
-const spec = buildTableSpec({
+const spec = buildSpec({
   type: "table.simple",
   columns,
   data,
@@ -204,7 +150,7 @@ console.log(spec);
 
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| `type` | `string` | **Yes** | Table template identifier: `"table.simple"`, `"table.withFooter"`, `"table.bodyOnly"`, or `"table.footerOnly"`. |
+| `type` | `string` | **Yes** | Table template identifier: `"table.simple"`, `"table.withFooter"`, `"table.headerOnly"`, `"table.bodyOnly"`, or `"table.footerOnly"`. |
 | `columns` | `Array<Object>` | **Yes** | Array of column definitions (see Column Contract). |
 | `data` | `Array<Object>` | **Yes** | Array of row data records matching column keys. |
 | `targetHtmlId` | `string` | **Yes** | The DOM element `id` where the generated table will be mounted. |
@@ -242,31 +188,13 @@ console.log(spec);
 
 ---
 
-## 🧪 Samples & Lifecycle Patterns
-
-The repository includes runnable interactive samples in `samples/`:
-
-### 1. `samples/v3/tableSimple/`
-Demonstrates direct single-pass rendering using the V3 bundle:
-- Uses `index.js` calling `window.ks.jsonRenderers.fromInstructions.render`.
-- Mounts directly into `<div id="dom-render-container">`.
-
-### 2. `samples/v2/tableWithSearch/`
-Demonstrates interactive table lifecycle with dynamic partial DOM manipulation:
-- **Search Capture**: Captures search input on `Enter` key via declarative instruction paths.
-- **Clear Body (`clearBody`)**: Clears only `tbody` children without re-rendering or touching headers and search inputs.
-- **Restore Body (`showBody` via Staging)**: Renders into a hidden `#v52-staging` container in the background, extracts the freshly stamped `<tbody>` child rows, and swaps them into the live table.
-
----
-
 ## 🔄 Version History
 
 - **V1 (`archive/v1/`)**: Initial instruction-driven proof-of-concept using `json-instruction-double`.
 - **V2 (`src/v2/`)**: Migrated to `json-renderers-run-instructions` for streamlined 1D and 2D instruction processing (`meta.version: "1.2.0"`).
-- **V3 (`src/v3/` - Current)**:
-  - Centralized component blueprints imported from `spec-repo`.
-  - Registered globally at `window.ks.jsonRenderers.fromInstructions`.
-  - Bundled standalone distribution in `docs/dist/v3/min.js`.
+- **V3 (`src/v3/`)**: Centralized component blueprints imported from `spec-repo` (`meta.version: "1.3.0"`).
+- **V4 (`src/v4/`)**: Enhanced option hooks and dynamic search/serial processing.
+- **V5 (`src/v5/` - Current)**: Complete multi-component dynamic definition engine supporting `table.simple`, `table.withFooter`, `table.headerOnly`, `table.bodyOnly`, `table.footerOnly`, and `select.simple`.
 
 ---
 
