@@ -13,7 +13,18 @@ const buildSpec = ({
 } = {}) => {
     const localTypeSplit = type.split(".");
 
-    const config = definitions[localTypeSplit[0]][localTypeSplit[1]];
+    const config = structuredClone(definitions[localTypeSplit[0]][localTypeSplit[1]]);
+    if (config?.double) {
+        config.double.forEach(d => {
+            if (d.func === "twoDimensional" && !d.templateKey) {
+                d.templateKey = {
+                    rowKey: "buildBodyTr",
+                    columnKey: "buildBodyCell"
+                };
+            }
+        });
+    }
+
     const base = structuredClone(config.base);
 
     const registry = {
