@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+        if (!location.pathname.endsWith('/') && !location.pathname.endsWith('.html')) {
+            location.replace(location.pathname + '/' + location.search + location.hash);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Renderers V1 — Navigation Hub | json-renderers-from-instructions</title>
+    <!-- Bootstrap 5 & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./sample/style.css">
+    <style>
+        .nav-hub-card {
+            background: #ffffff;
+            border: 1px solid #e9edf5;
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.25s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .nav-hub-card:hover {
+            transform: translateY(-4px);
+            border-color: #6558e8;
+            box-shadow: 0 16px 36px rgba(101, 88, 232, 0.12);
+            color: inherit;
+        }
+
+        .type-badge {
+            font-family: monospace;
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(101, 88, 232, 0.1);
+            color: #6558e8;
+            font-weight: 600;
+        }
+
+        .breadcrumb-container {
+            background: #ffffff;
+            border: 1px solid #e9edf5;
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container py-4">
+
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb" class="breadcrumb-container shadow-sm d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                    <a href="../../index.html" class="text-decoration-none">
+                        <i class="bi bi-house-door-fill me-1"></i>Documentation Hub
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="./index.html" class="text-decoration-none">Table</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">v1 Navigation</li>
+            </ol>
+            <div class="d-flex align-items-center gap-2">
+                <a href="../../monaco/v1/index.html" class="btn btn-outline-primary btn-sm rounded-pill">
+                    <i class="bi bi-code-slash me-1"></i> Monaco Studio
+                </a>
+                <a href="https://github.com/keshavsoft/json-renderers-from-instructions" target="_blank" class="btn btn-outline-secondary btn-sm rounded-pill">
+                    <i class="bi bi-github me-1"></i> GitHub
+                </a>
+            </div>
+        </nav>
+
+        <!-- Section Title -->
+        <div class="mb-4">
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <span class="badge bg-primary px-3 py-2 rounded-pill">
+                    <i class="bi bi-table me-1"></i> Table Suite V1
+                </span>
+                <span class="text-muted small">json-renderers-from-instructions</span>
+            </div>
+            <h1 class="h3 fw-bold mb-1">HTML Table Instruction Renderers</h1>
+            <p class="text-secondary mb-0">
+                Explore the five declarative table variants formed from instructions and mounted atomically to the DOM.
+            </p>
+        </div>
+
+        <!-- Navigation Cards Grid -->
+        <div class="row g-4 mb-5">
+            <!-- 1. Simple Table -->
+            <div class="col-md-6 col-lg-4">
+                <a href="./sample/index.html" class="nav-hub-card shadow-sm">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="feature-icon purple">
+                            <i class="bi bi-table"></i>
+                        </div>
+                        <span class="type-badge">table.simple</span>
+                    </div>
+                    <h5 class="fw-bold mb-2">sample Table</h5>
+                    <p class="text-muted small flex-grow-1 mb-3">
+                        Complete dynamic table featuring column sizing, header row, and data records assembled in one statement.
+                    </p>
+                    <div class="d-flex align-items-center text-primary fw-semibold small">
+                        <span>Open Sample Demo</span>
+                        <i class="bi bi-arrow-right ms-2"></i>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 2. Header Only Table -->
+            <div class="col-md-6 col-lg-4">
+                <a href="./headerOnly/index.html" class="nav-hub-card shadow-sm">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="feature-icon orange">
+                            <i class="bi bi-layout-text-window"></i>
+                        </div>
+                        <span class="type-badge">table.headerOnly</span>
+                    </div>
+                    <h5 class="fw-bold mb-2">Header Only Table</h5>
+                    <p class="text-muted small flex-grow-1 mb-3">
+                        Renders the column headers skeleton with colgroup widths, ready for async lazy body insertion.
+                    </p>
+                    <div class="d-flex align-items-center text-primary fw-semibold small">
+                        <span>Open Header Only Demo</span>
+                        <i class="bi bi-arrow-right ms-2"></i>
+                    </div>
+                </a>
+            </div>
+
+         
+
+            <!-- 3. Monaco Interactive Studio -->
+            <div class="col-md-6 col-lg-4">
+                <a href="../../monaco/v1/index.html" class="nav-hub-card shadow-sm">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="feature-icon orange">
+                            <i class="bi bi-sliders"></i>
+                        </div>
+                        <span class="type-badge">Monaco 2D Studio</span>
+                    </div>
+                    <h5 class="fw-bold mb-2">Monaco 2D Studio</h5>
+                    <p class="text-muted small flex-grow-1 mb-3">
+                        Interactive in-browser code editor with live AST inspection, live switching between all 5 table definitions, and real-time DOM compilation.
+                    </p>
+                    <div class="d-flex align-items-center text-primary fw-semibold small">
+                        <span>Open Interactive Studio</span>
+                        <i class="bi bi-arrow-right ms-2"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="d-flex justify-content-between align-items-center flex-wrap gap-2 pt-3 border-top text-muted small">
+            <div>
+                <strong>json-renderers-from-instructions</strong> &bull; Declarative UI Engine
+            </div>
+            <div class="d-flex gap-3">
+                <a href="../../index.html" class="text-decoration-none">Documentation Hub</a>
+                <a href="../../monaco/v1/index.html" class="text-decoration-none">Monaco Studio</a>
+                <a href="https://www.npmjs.com/package/json-renderers-from-instructions" class="text-decoration-none" target="_blank">NPM Package</a>
+            </div>
+        </footer>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -4,6 +4,10 @@ import data from "./common/data.json" with { type: "json" };
 const targetHtmlId = "dom-render-container";
 
 const start = () => {
+    if (!window.ks?.jsonRenderers?.fromInstructions?.render) {
+        setTimeout(start, 50);
+        return;
+    }
     try {
         window.ks.jsonRenderers.fromInstructions.render({
             type: "table.simple",
