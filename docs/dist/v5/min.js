@@ -1342,7 +1342,7 @@ var ve = (e, t) => e.map((e) => ({
 	fromCollection: q,
 	twoDimensional: be
 }, Oe = ({ instruction: e, registry: t, showLog: n, returnLog: r }) => {
-	let i = T, a = De[e.func]({
+	let i = t?.spec ?? T, a = De[e.func]({
 		columns: t?.data?.columns,
 		data: t?.data?.data,
 		columnSpec: i[e?.templateKey?.columnKey],
@@ -1350,7 +1350,7 @@ var ve = (e, t) => e.map((e) => ({
 	});
 	Y(t, e.destinationPath, a);
 }, ke = ({ instructions: e, registry: t, showLog: n, returnLog: r }) => {
-	e.forEach((e) => {
+	(e || []).forEach((e) => {
 		Oe({
 			instruction: e,
 			registry: t,
@@ -1362,15 +1362,15 @@ var ve = (e, t) => e.map((e) => ({
 	if (!Array.isArray(e)) throw TypeError("single instructions must be an array");
 	if (!Array.isArray(t)) throw TypeError("double instructions must be an array");
 	if (!n || typeof n != "object" || Array.isArray(n)) throw TypeError("registry must be an object");
-	return e.length > 0 && Ee(e, n, r), t.length > 0 && ke(t, n), n;
-}, Q = ({ definitions: e, spec: t, type: n = "table.simple", data: r = [], columns: i = [], options: a = {}, showLog: o = !1 } = {}) => {
-	let s = n.split("."), c = e[s[0]][s[1]], l = structuredClone(c.base), u = {
+	return e.length > 0 && Ee(e, n, r), t.length > 0 && ke({ instructions: t, registry: n, showLog: r }), n;
+}, Q = ({ definitions: e = w, spec: t = S, type: n = "table.simple", data: r = [], columns: i = [], options: a = {}, showLog: o = !1 } = {}) => {
+	let s = n.split("."), c = (e || w)[s[0]][s[1]], l = structuredClone(c.base), u = {
 		data: {
 			columns: i,
 			data: r
 		},
 		base: l,
-		spec: t,
+		spec: t || S,
 		...a
 	};
 	return Ae({

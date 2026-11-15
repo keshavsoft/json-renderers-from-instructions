@@ -1,10 +1,10 @@
 import runInstructions from "json-renderers-run-instructions";
 // import tableOptions from "json-renderers-build-table-options";
-import { definitions } from "spec-repo";
+import { definitions as fallbackDefinitions, spec as fallbackSpec } from "spec-repo";
 
 const buildSpec = ({
-    definitions,
-    spec,
+    definitions = fallbackDefinitions,
+    spec = fallbackSpec,
     type = "table.simple",
     data = [],
     columns = [],
