@@ -1,4 +1,5 @@
 import runInstructions from "json-renderers-run-instructions";
+import { definitions as fallbackDefinitions, spec as fallbackSpec } from "spec-repo";
 
 const buildSpec = ({
     type = "table.simple",
@@ -11,10 +12,10 @@ const buildSpec = ({
     const category = localTypeSplit[0];
     const variant = localTypeSplit[1];
 
-    const config = variant ? definitions[category]?.[variant] : definitions[category];
+    const config = variant ? fallbackDefinitions[category]?.[variant] : fallbackDefinitions[category];
     if (!config) {
         throw new Error(`Unknown component definition for type "${type}".`);
-    }
+    };
 
     const base = structuredClone(config.base);
 

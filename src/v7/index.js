@@ -2,7 +2,6 @@ import registerGlobal from "./registerGlobal/index.js";
 
 import guardFunc from "json-renderers-guard";
 import jsonToDom from "@keshavsoft/json-to-dom";
-import { spec as specRepoSpec, definitions } from "spec-repo";
 import buildSpec from "./buildSpec.js";
 
 const render = (config = {}) => {
@@ -23,8 +22,6 @@ const render = (config = {}) => {
 
     // 1. Build Virtual JSON DOM spec from instructions
     const spec = buildSpec({
-        definitions,
-        spec: specRepoSpec,
         type: config.type,
         data: config.data,
         columns: config.columns,
