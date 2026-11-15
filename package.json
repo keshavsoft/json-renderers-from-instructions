@@ -1,6 +1,6 @@
 {
   "name": "json-renderers-from-instructions",
-  "version": "1.6.1",
+  "version": "1.7.2",
   "description": "Focused table specification builder with configurable rows and cells",
   "type": "module",
   "main": "src/index.js",
@@ -18,8 +18,6 @@
     "@keshavsoft/json-to-dom": "^42.1.5",
     "json-renderers-build-table-options": "^1.7.2",
     "json-renderers-guard": "^1.5.3",
-    "json-renderers-run-instructions": "^1.4.1",
-    "json-renderers-specs": "^1.4.1",
-    "spec-repo": "^1.7.1"
+    "json-renderers-run-instructions": "^1.5.2"
   }
 }
