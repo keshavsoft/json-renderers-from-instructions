@@ -16,9 +16,9 @@
   },
   "dependencies": {
     "@keshavsoft/json-to-dom": "^42.1.5",
-    "json-renderers-build-table-options": "^1.7.2",
     "json-renderers-guard": "^1.5.3",
-    "json-renderers-run-instructions": "^1.5.3",
-    "spec-repo": "^1.7.5"
+    "json-renderers-run-instructions": "^1.5.4",
+    "json-renderers-run-options": "^1.1.1",
+    "spec-repo": "^1.7.6"
   }
 }
