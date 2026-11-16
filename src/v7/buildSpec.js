@@ -20,17 +20,24 @@ const buildSpec = ({
         throw new Error(`Unknown component definition for type "${type}".`);
     }
 
+    // Resolve base: if baseFromSpec is present, pull from spec; otherwise config.base
+    const rawBase = config.baseFromSpec ? spec[config.baseFromSpec] : config.base;
+    if (!rawBase) {
+        throw new Error(`Base template not found for type "${type}".`);
+    }
+
     // 1. Build Core Virtual JSON DOM tree via pure instructions
-    const base = runInstructions({
+    const instructionResult = runInstructions({
         single: config.single || [],
         double: config.double || [],
         rowOnColumn: config.rowOnColumn || [],
         columnOnRow: config.columnOnRow || [],
-        base: structuredClone(config.base),
+        base: structuredClone(rawBase),
         data: { columns, data },
         showLog
     });
-    // console.log("base : ", base);
+
+    const base = instructionResult?.base ?? instructionResult;
 
     // 2. Apply Dynamic Options & Features via json-renderers-run-options
     const optionDefs = config.options || definitions[category]?.options || {};
@@ -45,4 +52,3 @@ const buildSpec = ({
 };
 
 export default buildSpec;
-
