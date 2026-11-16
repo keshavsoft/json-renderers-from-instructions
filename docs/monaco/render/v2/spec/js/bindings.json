@@ -1,0 +1,17 @@
+[
+  {
+    "event": "change",
+    "selector": "#mainTypeSelect",
+    "action": "onMainTypeChange"
+  },
+  {
+    "event": "change",
+    "selector": "#subTypeSelect",
+    "action": "onSubTypeChange"
+  },
+  {
+    "event": "click",
+    "selector": "#buildButton",
+    "action": "buildAndRender"
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "containerId": "monacoSpec",
+  "theme": "vs-dark",
+  "language": "json",
+  "automaticLayout": true,
+  "minimap": {
+    "enabled": false
+  },
+  "fontSize": 14,
+  "lineNumbers": "on",
+  "tabSize": 2,
+  "scrollBeyondLastLine": false,
+  "formatOnPaste": true,
+  "formatOnType": true,
+  "modelUri": "inmemory://keshavsoft/render/v2/spec.json"
+}

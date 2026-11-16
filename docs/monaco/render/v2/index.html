@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3-Tab Multi-Studio Architecture — json-renderers-from-instructions</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    body {
+      background-color: #0b1120;
+      color: #e2e8f0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .card-tab {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 14px;
+      transition: all 0.2s ease-in-out;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-tab:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+      border-color: #38bdf8;
+    }
+    .hero-banner {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0369a1 100%);
+      padding: 48px 0 40px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Hero Header -->
+  <header class="hero-banner mb-4">
+    <div class="container" style="max-width: 1000px;">
+      <nav aria-label="breadcrumb" class="mb-2">
+        <ol class="breadcrumb mb-0 small">
+          <li class="breadcrumb-item"><a href="../../../index.html" class="text-info text-decoration-none">Docs</a></li>
+          <li class="breadcrumb-item"><a href="../../threeColumns/v2/index.html" class="text-info text-decoration-none">Monaco</a></li>
+          <li class="breadcrumb-item active text-white" aria-current="page">Render v2 Multi-Tab Studio</li>
+        </ol>
+      </nav>
+      <h1 class="display-6 fw-bold text-white mb-2">3-Tab Decoupled Studio Architecture</h1>
+      <p class="lead text-light mb-0" style="opacity: 0.85;">
+        Complete visual separation of concerns: <strong>Data Payload</strong> (Tab 1), <strong>Instruction Spec</strong> (Tab 2), and <strong>Plain HTML Render</strong> (Tab 3), synchronized live via <code>BroadcastChannel</code>.
+      </p>
+    </div>
+  </header>
+
+  <!-- Studio Cards -->
+  <main class="container mb-5" style="max-width: 1000px;">
+    <div class="row g-4">
+      <!-- Tab 1 Card -->
+      <div class="col-md-4">
+        <div class="card-tab p-4">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <span class="badge bg-primary px-3 py-1">Tab 1</span>
+            <span class="text-secondary small">2 Monaco Editors</span>
+          </div>
+          <h2 class="h5 fw-bold text-white mb-2"><i class="bi bi-database me-2 text-primary"></i>Data Studio</h2>
+          <p class="small text-secondary flex-grow-1">
+            Dedicated 50/50 split workspace displaying <strong>data.json</strong> (records) and <strong>columns.json</strong> (column definitions). Syncs live data into the bridge.
+          </p>
+          <a href="./data/" class="btn btn-outline-primary btn-sm fw-bold w-100">Open Tab 1: Data Studio →</a>
+        </div>
+      </div>
+
+      <!-- Tab 2 Card -->
+      <div class="col-md-4">
+        <div class="card-tab p-4">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <span class="badge bg-success px-3 py-1">Tab 2</span>
+            <span class="text-secondary small">1 Monaco Editor</span>
+          </div>
+          <h2 class="h5 fw-bold text-white mb-2"><i class="bi bi-file-earmark-code me-2 text-success"></i>Spec Studio</h2>
+          <p class="small text-secondary flex-grow-1">
+            Driven by <code>spec-repo</code>. Select <strong>Main</strong> (table) and <strong>Sub</strong> (simple) dropdowns, inspect base AST, and trigger <strong>[▶ Build & Render]</strong>.
+          </p>
+          <a href="./spec/" class="btn btn-outline-success btn-sm fw-bold w-100">Open Tab 2: Spec Studio →</a>
+        </div>
+      </div>
+
+      <!-- Tab 3 Card -->
+      <div class="col-md-4">
+        <div class="card-tab p-4">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <span class="badge bg-info px-3 py-1">Tab 3</span>
+            <span class="text-secondary small">Zero Editors</span>
+          </div>
+          <h2 class="h5 fw-bold text-white mb-2"><i class="bi bi-display me-2 text-info"></i>Live HTML Render</h2>
+          <p class="small text-secondary flex-grow-1">
+            Pure, unpolluted HTML consumer page. Listens to the bridge and executes <code>render({ type, data, columns, targetHtmlId })</code> directly into DOM.
+          </p>
+          <a href="./display/" class="btn btn-info btn-sm fw-bold text-dark w-100">Open Tab 3: Live Render →</a>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>
