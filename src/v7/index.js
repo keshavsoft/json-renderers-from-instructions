@@ -30,10 +30,11 @@ const render = (config = {}) => {
     });
 
     if (showLog) console.log("[v6 from-instructions] generated spec:", spec);
+    // console.log("spec : ", spec);
 
     // 2. Automatically mount to DOM via @keshavsoft/json-to-dom
     const dom = jsonToDom({
-        jsonSpec: spec,
+        jsonSpec: spec?.base,
         targetHtmlId: config.targetHtmlId,
         appendPosition: config.appendPosition || "replace",
         showLog

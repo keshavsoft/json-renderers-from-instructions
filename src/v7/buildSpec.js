@@ -30,6 +30,7 @@ const buildSpec = ({
         data: { columns, data },
         showLog
     });
+    // console.log("base : ", base);
 
     // 2. Apply Dynamic Options & Features via json-renderers-run-options
     const optionDefs = config.options || definitions[category]?.options || {};

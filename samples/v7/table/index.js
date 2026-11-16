@@ -15,7 +15,7 @@ const start = () => {
             targetHtmlId,
             classToApply: "",
             appendPosition: "replace",
-            showLog: true
+            showLog: false
         });
     } catch (error) {
         console.error("V7 Table initialization failed:", error);
