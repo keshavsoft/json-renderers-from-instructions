@@ -12,64 +12,104 @@
 [![Monaco 2D Studio](https://img.shields.io/badge/Monaco%20Studio-Live%20Playground-informational?logo=visualstudiocode&logoColor=white)](https://keshavsoft.github.io/json-renderers-from-instructions/monaco/v1/index.html)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-[**Live Demo Hub**](https://keshavsoft.github.io/json-renderers-from-instructions/) • [**NPM Package**](https://www.npmjs.com/package/json-renderers-from-instructions) • [**Table Renderers (docs/table)**](docs/table/v1/index.html) • [**Monaco 2D Studio**](docs/monaco/v1/index.html) • [**8-Chapter Story**](docs/stories/01-the-sentence.html)
+[**Live Demo Hub**](https://keshavsoft.github.io/json-renderers-from-instructions/) • [**NPM Package**](https://www.npmjs.com/package/json-renderers-from-instructions) • [**Architecture Guide**](docs/ARCHITECTURE.md) • [**Table Renderers (docs/table)**](docs/table/v1/index.html) • [**Monaco 2D Studio**](docs/monaco/v1/index.html)
 
 </div>
 
 ---
 
-## 📊 Table Renderers Suite (`docs/table`)
+## 📖 The Story Behind the Architecture
 
-The interactive table showcase is located in [`docs/table/`](docs/table/v1/index.html). It features five declarative table components generated purely from JSON contracts:
+Why does `json-renderers-from-instructions` exist, and why is the rendering pipeline structured across dedicated layers?
 
-| Table Variant | Instruction Type | Live Link | Description |
-| :--- | :--- | :--- | :--- |
-| **Simple Table** | `table.simple` | [Open Sample Demo](docs/table/v1/sample/index.html) | Complete turnkey table: header, colgroup widths, and 2D body data rows. |
-| **With Footer** | `table.withFooter` | [Open With Footer Demo](docs/table/v1/withFooter/index.html) | Extended table featuring full headers, body records, and summary calculations in `tfoot`. |
-| **Header Only** | `table.headerOnly` | [Open Header Only Demo](docs/table/v1/headerOnly/index.html) | Column structure shell with widths, designed for incremental body streaming. |
-| **Body Only** | `table.bodyOnly` | [Open Body Only Demo](docs/table/v1/bodyOnly/index.html) | Pure data row matrix (`tbody`) injected into existing DOM table shells. |
-| **Footer Only** | `table.footerOnly` | [Open Footer Only Demo](docs/table/v1/footerOnly/index.html) | Modular summary footer calculation row mounted to `tfoot`. |
+In traditional frontend development, every UI widget (a table, a form, a dropdown, an autocomplete list) requires custom markup, repeated layout loops, and bespoke state handlers. When table requirements change, you rewrite HTML. When options like search bars or serial numbers are toggled, you litter the component with `if/else` branches.
 
-👉 Explore the interactive [Table V1 Navigation Hub](docs/table/v1/index.html).
+**`json-renderers-from-instructions` solves this by treating UI as pure mathematical transformations on JSON data:**
 
----
-
-
-| Component | Role |
-| :--- | :--- |
-| **`spec-repo`** | Provides declarative component blueprints (`base` skeleton + `single` column instructions + `double` matrix row instructions). |
-| **`json-renderers-run-instructions`** | Executes the transformation instructions against a data registry without touching the live DOM. |
-| **`json-renderers-build-table-options`** | Applies dynamic features (serial numbers `#`, search bars, custom option headers). |
-| **`json-renderers-guard`** | Validates contracts and required parameters before execution. |
-| **`@keshavsoft/json-to-dom`** | High-speed DOM generator that converts the JSON specification into live browser nodes. |
+1. **The Canvas**: An empty skeleton blueprint declared in [`spec-repo`](https://github.com/keshavsoft/spec-repo) (e.g., table shell, form wrapper, card container).
+2. **The Blueprint Instructions**: An ordered sequence of geometric operations executed on the canvas:
+   - **0-Dimension (Primitive)**: Scalar template filling (`applyTemplate`).
+   - **1-Dimension (One-Dimension)**: Transforming a 1D collection (e.g. columns) into headers, colgroups, form inputs, or list items (`fromCollection`).
+   - **2-Dimensions (Two-Dimensions Matrix)**: Cross-multiplying two orthogonal axes (data records × columns) to stamp out 2D matrices like table bodies (`<tbody><tr><td>`), `<select><option>`, and `<datalist><option>`.
+3. **The Options Layer**: Dynamic feature decorators (search bars, serial numbers, row actions) applied systematically over the base specification.
+4. **The Mount**: An ultra-fast, atomic injection into the browser DOM via [`@keshavsoft/json-to-dom`](https://github.com/keshavsoft/json-to-dom).
 
 ---
 
-## 📦 Installation
+## 🏛️ The Multi-Tier Ecosystem
 
-### Via npm / pnpm / yarn
-
-```bash
-npm install json-renderers-from-instructions
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│ Level 3: json-renderers-from-instructions-collection                   │
+│ Multi-Renderer Compositor: loops through [form, table, select], etc.   │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ delegates single component
+┌───────────────────────────────────▼────────────────────────────────────┐
+│ Level 2: json-renderers-from-instructions (THIS PACKAGE - v8)          │
+│ Public UI API: category.variant -> Canvas + Execution + DOM Mount      │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ runs instructions + options
+┌───────────────────────────────────▼────────────────────────────────────┐
+│ Level 1B: json-renderers-run-instructions (v15)                        │
+│ Lifecycle Coordinator: orchestrates Base Builders + Option Decorators  │
+└─────────────────┬──────────────────────────────────┬───────────────────┘
+                  │                                  │
+                  ▼                                  ▼
+┌─────────────────────────────────┐┌─────────────────────────────────────┐
+│ Level 1A: run-instructions-steps││ json-renderers-run-options          │
+│ Sequential Blueprint Runner     ││ Feature Switches & Enhancements     │
+│ (executes ["step1", "step2"])   ││ (search, serial, action buttons)    │
+└─────────────────┬───────────────┘└─────────────────────────────────────┘
+                  │
+                  ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│ Level 0: Pure Dimensional Transformers                                 │
+│ 0D Primitive (applyTemplate)                                           │
+│ 1D One-Dimension (fromCollection)                                      │
+│ 2D Two-Dimensions (rowOnColumn, columnOnRow)                           │
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
-```bash
-pnpm add json-renderers-from-instructions
-```
+### 💡 Why Keep These Repositories Distinct? (The Strategic Space)
 
-### Via Browser CDN (Zero Build Tools)
+At first glance, `from-instructions`, `run-instructions`, and `run-instructions-steps` might appear to orbit closely around each other. **This separation is intentional and strategic:**
 
-Include the pre-bundled standalone distribution:
+- **Separation of Base Builders vs. Feature Options**:  
+  Currently, constructing the core component structure (the base canvas + data instructions) and applying feature options (search inputs, serial badges, action buttons) are handled as two distinct phases.
+- **The Staging Ground for Future Unification**:  
+  Maintaining this modular separation gives the **architectural breathing room** needed to eventually merge options and base builders into a single, unified declarative step engine. Because `from-instructions` provides a clean public facade, internal unifications happen under the hood without breaking consumers.
+- **Headless & Isomorphic**:  
+  Specification building (`buildSpec`) has **zero DOM dependencies**. It runs identically in Node.js, CLI pipelines, Web Workers, or browsers.
 
-```html
-<script type="module" src="https://keshavsoft.github.io/json-renderers-from-instructions/dist/v5/min.js"></script>
-```
+---
+
+## 📦 Supported Component Types
+
+Because `v8` is completely generalized, it is not limited to tables. It dynamically resolves any component declared in `spec-repo`:
+
+| Component Category | Available Variants | Description |
+| :--- | :--- | :--- |
+| **`table`** | `table.simple`, `table.withFooter`, `table.headerOnly`, `table.bodyOnly`, `table.footerOnly` | Data grid with colgroups, headers, body matrices, and footer summaries. |
+| **`form`** | `form.simple` | Generates complete data entry forms and input controls from column schemas. |
+| **`select`** | `select.simple`, `selectOptionsOnly.simple` | Standard dropdown selection elements populated with dynamic options. |
+| **`dataList`** | `dataList.simple` | HTML5 `<datalist>` autocomplete suggestion engines. |
+| **`card`** | `card.simple`, `card.withHeader`, `card.withFooter`, `card.imageTop` | Modular card layouts with header, body, and action footers. |
+| **`list`** | `list.simple`, `list.group`, `list.ordered` | Unordered, numbered, and Bootstrap list groups. |
+| **`accordion`** | `accordion.simple`, `accordion.flush` | Collapsible multi-section accordion views. |
 
 ---
 
 ## 🚀 Quick Start
 
-### 1. Direct Turnkey Rendering
+### Installation
+
+```bash
+npm install json-renderers-from-instructions
+# or
+pnpm add json-renderers-from-instructions
+```
+
+### 1. Turnkey Browser Rendering (`render`)
 
 ```javascript
 import { render } from "json-renderers-from-instructions";
@@ -86,40 +126,37 @@ const data = [
   { itemName: "Stainless Steel Rod", category: "Raw Materials", baseUnit: "pcs" }
 ];
 
-// Renders directly into <div id="my-table-container"></div>
+// Mounts a complete interactive table into <div id="my-container"></div>
 render({
   type: "table.simple",
   columns,
   data,
   options: {
     showSerial: true,
-    showSearch: false,
+    showSearch: true,
     showOptions: false
   },
-  targetHtmlId: "my-table-container",
-  appendPosition: "replace",
-  classToApply: ""
+  targetHtmlId: "my-container",
+  appendPosition: "replace"
 });
 ```
 
-### 2. Browser Global (`window.ks`)
-
-When using the CDN or pre-compiled bundle (`dist/v5/min.js`), the library automatically registers on the global namespace:
+### 2. Render a Form from the Same Schema!
 
 ```javascript
-window.ks.jsonRenderers.fromInstructions.render({
-  type: "table.simple",
+// Render a form using the EXACT same column contract:
+render({
+  type: "form.simple",
   columns,
   data,
-  targetHtmlId: "dom-render-container",
-  appendPosition: "replace",
-  classToApply: ""
+  targetHtmlId: "form-container",
+  appendPosition: "replace"
 });
 ```
 
 ### 3. Headless Specification Builder (`buildSpec`)
 
-If you only want the JSON specification without touching the DOM (for unit testing, SSR, Web Workers, or inspection):
+If you want the pure Virtual JSON DOM specification without touching the browser DOM (for unit testing, SSR, or backend generation):
 
 ```javascript
 import { buildSpec } from "json-renderers-from-instructions";
@@ -132,14 +169,22 @@ const spec = buildSpec({
 });
 
 console.log(spec);
-// Returns a pure JSON DOM tree:
-// {
-//   tagName: "div",
-//   attributes: { "data-role": "table-parent" },
-//   children: [
-//     { tagName: "table", attributes: {...}, children: [...] }
-//   ]
-// }
+// Returns deterministic, pure JSON Virtual DOM tree ready for inspection or testing
+```
+
+### 4. Zero-Build Browser Global (`window.ks`)
+
+```html
+<script type="module" src="https://keshavsoft.github.io/json-renderers-from-instructions/dist/v8/min.js"></script>
+
+<script>
+  window.ks.jsonRenderers.fromInstructions.render({
+    type: "table.simple",
+    columns: [...],
+    data: [...],
+    targetHtmlId: "table-root"
+  });
+</script>
 ```
 
 ---
@@ -148,53 +193,29 @@ console.log(spec);
 
 ### `render(config)` Parameters
 
-| Parameter | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `type` | `string` | **Yes** | Table template identifier: `"table.simple"`, `"table.withFooter"`, `"table.headerOnly"`, `"table.bodyOnly"`, or `"table.footerOnly"`. |
-| `columns` | `Array<Object>` | **Yes** | Array of column definitions (see Column Contract). |
-| `data` | `Array<Object>` | **Yes** | Array of row data records matching column keys. |
-| `targetHtmlId` | `string` | **Yes** | The DOM element `id` where the generated table will be mounted. |
-| `appendPosition` | `string` | **Yes** | How to insert into the target container: `"replace"`, `"append"`, or `"prepend"`. |
-| `classToApply` | `string` | Optional | Additional CSS class string to apply to the root wrapper. |
-| `options` | `Object` | Optional | Table behavior options (see Options Contract). |
-| `showLog` | `boolean` | Optional | When `true`, prints internal transformation steps to console. |
-
-### Column Contract
-
-```json
-{
-  "columnName": "itemName",
-  "label": "Item Name",
-  "type": "text",
-  "width": "260px",
-  "placeholder": "Enter description...",
-  "required": true
-}
-```
-
-### Options Contract
-
-```json
-{
-  "showSerial": true,
-  "showSearch": true,
-  "showOptions": false
-}
-```
-
-- **`showSerial`**: Adds an automatic `#` serial number column to `<colgroup>`, `<thead>`, `<tbody>`, and `<tfoot>`.
-- **`showSearch`**: Renders an inline search input above the table.
-- **`showOptions`**: Renders an options / action column for row-level buttons.
+| Parameter | Type | Required | Default | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| `type` | `string` | **Yes** | `"table.simple"` | Component identifier in `category.variant` format (e.g. `table.simple`, `form.simple`, `select.simple`). If no variant is given (e.g. `"table"`), defaults to `"simple"`. |
+| `columns` | `Array<Object>` | **Yes** | `[]` | Schema definitions defining field attributes, labels, input types, and column widths. |
+| `data` | `Array<Object>` | **Yes** | `[]` | Data records matching the column keys. |
+| `targetHtmlId` | `string` | **Yes** | — | Target DOM container `id`. |
+| `appendPosition` | `string` | Optional | `"replace"` | Mounting strategy: `"replace"`, `"append"`, or `"prepend"`. |
+| `options` | `Object` | Optional | `{}` | Component feature toggles (`showSerial`, `showSearch`, `showOptions`, etc.). |
+| `classToApply` | `string` | Optional | `""` | Custom CSS classes to attach to the root container. |
+| `showLog` | `boolean` | Optional | `false` | Enables step-by-step diagnostic logging. |
 
 ---
 
-## 🔄 Version History
+## 🔄 Version Evolution
 
-- **V1 (`archive/v1/`)**: Initial instruction-driven proof-of-concept using `json-instruction-double`.
-- **V2 (`src/v2/`)**: Migrated to `json-renderers-run-instructions` for streamlined 1D and 2D instruction processing (`meta.version: "1.2.0"`).
-- **V3 (`src/v3/`)**: Centralized component blueprints imported from `spec-repo` (`meta.version: "1.3.0"`).
-- **V4 (`src/v4/`)**: Enhanced option hooks and dynamic search/serial processing.
-- **V5 (`src/v5/` - Current)**: Complete multi-component dynamic definition engine supporting `table.simple`, `table.withFooter`, `table.headerOnly`, `table.bodyOnly`, `table.footerOnly`, and `select.simple`.
+- **V1 (`archive/v1/`)**: Initial instruction-driven proof-of-concept.
+- **V2–V4**: Progressive migration to decoupled runners and early `spec-repo` centralized blueprints.
+- **V5–V6**: Extended option hooks and dynamic search/serial processing.
+- **V7**: Generalized component definitions for multiple UI types.
+- **V8 (Current)**: **The Pure Delegation Architecture**.
+  - Erased all hardcoded bucket arrays (`single`, `double`, `rowOnColumn`, `columnOnRow`).
+  - `buildSpec` streamlined to a lean delegator routing directly to `json-renderers-run-instructions` and `json-renderers-run-instructions-steps`.
+  - Full support for the unified 0D/1D/2D dimensional transformation engine.
 
 ---
 
