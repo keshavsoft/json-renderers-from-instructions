@@ -11,7 +11,7 @@ const buildSpec = ({
 } = {}) => {
     const localTypeSplit = type.split(".");
     const category = localTypeSplit[0];
-    const variant = localTypeSplit[1];
+    const variant = localTypeSplit[1] || "simple";
 
     // 1. Build Core Virtual JSON DOM tree via pure instructions
     const fromInstructions = runInstructions({

@@ -1,6 +1,6 @@
 import columns from "./common/columns.json" with { type: "json" };
 import data from "./common/data.json" with { type: "json" };
-import render from "../../../docs/dist/v7/min.js";
+import render from "../../../docs/dist/v8/min.js";
 
 const targetHtmlId = "dom-render-container";
 

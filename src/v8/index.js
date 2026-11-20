@@ -10,7 +10,7 @@ const render = (config = {}) => {
     const localOptions = config?.options || {};
 
     if (showLog) {
-        console.log("[v6 from-instructions] input config:", {
+        console.log("[v8 from-instructions] input config:", {
             type: config.type,
             options: localOptions,
             columns: config.columns,
@@ -29,7 +29,7 @@ const render = (config = {}) => {
         showLog
     });
 
-    if (showLog) console.log("[v6 from-instructions] generated spec:", spec);
+    if (showLog) console.log("[v8 from-instructions] generated spec:", spec);
     // console.log("spec : ", spec);
 
     // 2. Automatically mount to DOM via @keshavsoft/json-to-dom
@@ -40,7 +40,7 @@ const render = (config = {}) => {
         showLog
     });
 
-    if (showLog) console.log("[v6 from-instructions] mounted DOM element:", dom);
+    if (showLog) console.log("[v8 from-instructions] mounted DOM element:", dom);
 
     return dom;
 };
